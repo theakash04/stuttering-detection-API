@@ -1,2 +1,4 @@
 .venv
+*.html
 __pycache__
+*.wav

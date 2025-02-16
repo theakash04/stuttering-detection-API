@@ -1,12 +1,9 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-origins = [
-    "*"
-]
-
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,19 +14,18 @@ app.add_middleware(
 )
 
 @app.post("/api/detect")
-async def detectStutter(request: Request):
-    audioData = await request.body()
+async def detect_stutter(file: UploadFile = File(...)):
+    if not file:
+        raise HTTPException(status_code=400, detail="No audio file received")
 
-    if not audioData:
-        raise HTTPException(status_code=400, detail="No audio data received")
-
-    # Temporary will delete later 
     file_path = "audio.wav"
     try:
-        with open(file_path, "wb") as file:
-            file.write(audioData)
-    except Exception as err:
-        print(err)
+        with open(file_path, "wb") as buffer:
+            content = await file.read()
+            buffer.write(content)
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail="Something unexpected happened!")
 
     return {"status": "success", "detail": "Got the audio successfully"}
+
