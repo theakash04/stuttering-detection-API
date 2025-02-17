@@ -1,11 +1,17 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+import requests
 from fastapi.middleware.cors import CORSMiddleware
 import torch
 import torchaudio
 from transformers import WhisperFeatureExtractor, WhisperModel
 import torch.nn as nn
+from dotenv import load_dotenv
+import os
 
 app = FastAPI()
+
+load_dotenv()
+api_key = os.getenv("GEMINI")
 
 origins = ["*"]
 
@@ -65,6 +71,32 @@ def predict_stuttering(audio_path):
     return "Stuttering Detected" if prediction == 1 else "No Stuttering"
 
 
+def generate_content(stuttering: str, api_key: str) -> dict:
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    
+    headers = {
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": f"Imagine you're a speech therapist. A stuttering detector returns either 'stuttering detected' or 'No Stuttering'. For 'stuttering detected', provide empathetic feedback, insights on possible triggers, and personalized recommendations to manage stuttering. For 'No Stuttering', offer positive reinforcement and tips to maintain fluent speech. Keep your response concise and personalized. {stuttering}"
+                     }
+                ]
+            }
+        ]
+    }
+    
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()  # Raises an error for bad responses (4xx or 5xx)
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        # In case of an error, return a dictionary with error details
+        return {"error": str(e)}
+
 
 # route for client
 @app.post("/api/detect")
@@ -80,5 +112,9 @@ async def detect_stutter(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="Something unexpected happened!")
 
     result = predict_stuttering(file_path)
+    feedback = generate_content(result, api_key)
+    feedback = feedback["candidates"][0]["content"]["parts"][0]["text"]
+    print(feedback)
 
-    return {"status": "success", "detail": "Got the audio successfully", "result": result}
+    return {"status": "success", "feedback": feedback, "result": result}
+
