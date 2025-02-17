@@ -29,7 +29,8 @@ class WhisperForStutteringClassification(nn.Module):
         logits = self.classifier(pooled_output)
         return logits
 
-model_path = "/media/rishabh/volume 1/stuttering_detetction/model/whisper-small/stuttering_detection_model.pth"
+# file path of trained model
+model_path = "/stuttering_detetction/model/whisper-small/stuttering_detection_model.pth"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = WhisperForStutteringClassification()
@@ -63,10 +64,11 @@ def predict_stuttering(audio_path):
 
     return "Stuttering Detected" if prediction == 1 else "No Stuttering"
 
+
+
+# route for client
 @app.post("/api/detect")
 async def detect_stutter(file: UploadFile = File(...)):
-    if not file:
-        raise HTTPException(status_code=400, detail="No audio file received")
 
     file_path = "audio.wav"
     try:
