@@ -64,19 +64,19 @@ const HeroSection = () => {
                             &copy; WE TRIED OUR BEST!
                         </p>
                         <div className="space-x-6 flex items-center justify-center">
-                            <a href="#" className="text-sky-100 transition-colors flex gap-2 hover:underline">
+                            <a href="https://github.com/anubhavgh023" className="text-sky-100 transition-colors flex gap-2 hover:underline">
                                 <p>ANUBHAV</p>
                             </a>
-                            <a href="#" className="text-sky-100 transition-colors flex gap-2 hover:underline">
+                            <a href="https://github.com/theakash04" className="text-sky-100 transition-colors flex gap-2 hover:underline">
                                 <p>AKASH</p>
                             </a>
-                            <a href="#" className="text-sky-100 transition-colors flex gap-2 hover:underline">
+                            <a href="https://github.com/Rishabh-Gi-t" className="text-sky-100 transition-colors flex gap-2 hover:underline">
                                 <p>RISHBH</p>
                             </a>
-                            <a href="#" className="text-sky-100 transition-colors flex gap-2 hover:underline">
+                            <a href="https://github.com/sobhitb033" className="text-sky-100 transition-colors flex gap-2 hover:underline">
                                 <p>SOBHIT</p>
                             </a>
-                            <a href="#" className="text-sky-100 transition-colors flex gap-2 hover:underline">
+                            <a href="https://github.com/pranav5127" className="text-sky-100 transition-colors flex gap-2 hover:underline">
                                 <p>PRANAV</p>
                             </a>
                         </div>
