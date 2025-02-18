@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 
 const HeroSection = () => {
@@ -11,7 +10,7 @@ const HeroSection = () => {
                 {/* Title Section */}
                 <div className=" pb-8 mb-12 text-center">
                     <h1 className="font-extrabold md:text-8xl text-6xl bg-gradient-to-b from-sky-100 to-sky-200 bg-clip-text text-transparent tracking-tighter animate-shine">
-                        STUT - FIX
+                        VOCALS
                     </h1>
                 </div>
 
@@ -34,24 +33,24 @@ const HeroSection = () => {
                         {
                             title: "Real-Time Analysis",
                             desc: "Instant stuttering detection for immediate feedback",
-                            icon: "📈"
+                            icon: "graph.svg"
                         },
                         {
                             title: "Personalized Insights",
                             desc: "Tailored suggestions to improve speech fluency",
-                            icon: "🎯"
+                            icon: "target.svg"
                         },
                         {
                             title: "Intuitive Interface",
                             desc: "Effortless navigation with modern design",
-                            icon: "💻"
+                            icon: "interface.svg"
                         },
                     ].map((feature, index) => (
                         <div
                             key={index}
                             className="bg-primary-foreground/70 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-blue-100"
                         >
-                            <div className="text-4xl mb-4">{feature.icon}</div>
+                            <img className="mb-4 w-10 h-10" src={feature.icon} />
                             <h3 className="text-2xl font-bold text-sky-100 mb-3">{feature.title}</h3>
                             <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
                         </div>

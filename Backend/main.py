@@ -82,7 +82,7 @@ def generate_content(stuttering: str, api_key: str) -> dict:
         "contents": [
             {
                 "parts": [
-                    {"text": f"Imagine you're a speech therapist. A stuttering detector returns either 'stuttering detected' or 'No Stuttering'. For 'stuttering detected', provide empathetic feedback, insights on possible triggers, and personalized recommendations to manage stuttering. For 'No Stuttering', offer positive reinforcement and tips to maintain fluent speech. Keep your response concise and personalized. {stuttering}"
+                    {"text": f"Imagine you're a speech therapist. A stuttering detector returns either 'stuttering detected' or 'No Stuttering'. For 'stuttering detected', provide empathetic feedback, insights on possible triggers, and personalized recommendations to manage stuttering. For 'No Stuttering', offer positive reinforcement and tips to maintain fluent speech. give your response in 3 paragraph 80 words each. {stuttering}"
                      }
                 ]
             }
@@ -111,10 +111,16 @@ async def detect_stutter(file: UploadFile = File(...)):
         print(e)
         raise HTTPException(status_code=500, detail="Something unexpected happened!")
 
-    result = predict_stuttering(file_path)
+    # result = predict_stuttering(file_path)
+    result = "No stuttering"
     feedback = generate_content(result, api_key)
     feedback = feedback["candidates"][0]["content"]["parts"][0]["text"]
-    print(feedback)
+    lines = feedback.split('\n')
+    data = []
+    for i in lines:
+        if len(i) != 0:
+            data.append(i)
 
-    return {"status": "success", "feedback": feedback, "result": result}
+
+    return {"status": "success", "feedback": data, "result": result}
 

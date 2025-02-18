@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 interface response {
     status: string,
-    feedback: string,
+    feedback: [string],
     result: string
 }
 
@@ -234,9 +234,9 @@ const AudioRecorder: React.FC = () => {
 
                             <label
                                 htmlFor="file-upload"
-                                className="flex flex-col items-center justify-center cursor-pointer border-2 border-slate-600 rounded-lg p-6 transition-all hover:border-indigo-500 hover:bg-slate-800/40 group w-64"
+                                className="flex flex-col items-center justify-center cursor-pointer border-2 border-slate-600 rounded-lg p-6 transition-all hover:border-sky-100 hover:bg-slate-800/40 group w-64"
                             >
-                                <div className="mb-3 text-indigo-500 group-hover:text-indigo-400 transition-colors">
+                                <div className="mb-3 text-sky-100 group-hover:text-sky-100 transition-colors">
                                     <svg
                                         className="w-8 h-8"
                                         fill="none"
@@ -252,8 +252,8 @@ const AudioRecorder: React.FC = () => {
                                     </svg>
                                 </div>
 
-                                <p className="text-center text-slate-300 group-hover:text-indigo-100 transition-colors">
-                                    <span className="font-medium">Browse WAV files</span>
+                                <p className="text-center text-muted-foreground group-hover:text-sky-100 transition-colors">
+                                    <span className="font-medium text-sky-100">Browse WAV files</span>
                                     <span className="block text-sm mt-1 text-slate-400">Max 20MB</span>
                                 </p>
                             </label>
@@ -317,31 +317,42 @@ const AudioRecorder: React.FC = () => {
 
                             <div className="space-y-6 w-full max-w-2xl">
                                 <motion.div
-                                    className="bg-slate-700/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-slate-600/30"
+                                    className="bg-slate-700/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-sky-200/30"
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                 >
                                     <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-2xl">🎯</span>
-                                        <p className="text-xl font-semibold text-sky-200">Analysis Result</p>
+                                        <img className="text-2xl w-7 h-7" src="target.svg" />
+                                        <p className="text-xl font-semibold text-sky-100">Analysis Result</p>
                                     </div>
-                                    <p className="text-slate-200 leading-relaxed">
+                                    <p className="text-muted-foreground leading-relaxed">
                                         {showResult.result}
                                     </p>
                                 </motion.div>
 
                                 <motion.div
-                                    className="bg-slate-700/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-red-600/30"
+                                    className="bg-slate-700/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-sky-200/30"
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.1 }}
                                 >
                                     <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-2xl">💡</span>
-                                        <p className="text-xl font-semibold text-red-200">Feedback</p>
+                                        <img className="text-2xl w-7 h-7" src="bulb.svg" />
+                                        <p className="text-xl font-semibold text-sky-100">Feedback</p>
                                     </div>
-                                    <div className="text-slate-200 leading-relaxed">
-                                        {showResult.feedback}
+                                    <div className="text-muted-foreground leading-relaxed">
+                                        <div>
+                                            {showResult.feedback.map((val: string, index: number) => (
+                                                <>
+                                                    <span key={index}>
+                                                        &bull; {" "}
+                                                        {val}
+                                                        <br />
+                                                        <br />
+                                                    </span>
+                                                </>
+                                            ))}
+                                        </div>
                                     </div>
                                 </motion.div>
                             </div>
@@ -355,7 +366,7 @@ const AudioRecorder: React.FC = () => {
                         >
                             <Button
                                 size="lg"
-                                className="rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white shadow-md hover:shadow-lg transition-all duration-300 px-8 py-6 text-lg font-semibold"
+                                className="rounded-lg bg-sky-100 hover:bg-white text-black shadow-md hover:shadow-lg transition-all duration-300 px-8 py-6 text-lg font-semibold"
                                 onClick={() => { setIsProcessing(false); setShowResult(null); setIsProceed(false); setSelectedFile(null) }}
                             >
 
