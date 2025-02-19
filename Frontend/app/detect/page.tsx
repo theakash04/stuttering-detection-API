@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { File, Mic, Square } from "lucide-react";
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from 'framer-motion';
+import TypewriterFeedback from "@/components/typrwritterFeedback";
 
 interface response {
     status: string,
@@ -342,16 +343,7 @@ const AudioRecorder: React.FC = () => {
                                     </div>
                                     <div className="text-muted-foreground leading-relaxed">
                                         <div>
-                                            {showResult.feedback.map((val: string, index: number) => (
-                                                <>
-                                                    <span key={index}>
-                                                        &bull; {" "}
-                                                        {val}
-                                                        <br />
-                                                        <br />
-                                                    </span>
-                                                </>
-                                            ))}
+                                            <TypewriterFeedback feedback={showResult.feedback} />
                                         </div>
                                     </div>
                                 </motion.div>
